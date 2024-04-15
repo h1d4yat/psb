@@ -2,6 +2,7 @@
 import {
   onMounted,
   ref,
+  useSlots,
 } from 'vue';
 
 import { initFlowbite } from 'flowbite';
@@ -17,6 +18,7 @@ import User from './Part/Menu/User.vue';
 import Navbar from './Part/Navbar.vue';
 import Sidebar from './Part/Sidebar.vue';
 
+const slot = useSlots();
 const showingNavigationDropdown = ref(false);
 onMounted(function () {
     initFlowbite();
@@ -33,7 +35,11 @@ onMounted(function () {
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
         <div class="p-4 sm:ml-64">
         <div class="p-4 dark:border-gray-700 mt-14">
-            <slot name="header"/>
+            <h2 v-if="slot.header" class="mb-4 text-xl font-semibold leading-tight text-gray-800">
+                <slot name="header"/>
+
+            </h2>
+
             <slot />
         </div>
     </div>

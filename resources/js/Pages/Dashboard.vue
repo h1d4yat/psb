@@ -1,7 +1,10 @@
 <script setup>
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import {
+  Head,
+  Link,
+} from '@inertiajs/vue3';
 </script>
 
 <template>
@@ -24,7 +27,9 @@ import { Head } from '@inertiajs/vue3';
                 </p>
                 <p v-else>Silahkan lanjut mengisi form pendaftaran.</p>
                 <div class="flex justify-start mt-4">
-                    <PrimaryButton>Buat Formulir</PrimaryButton>
+                    <PrimaryButton>
+                        <Link :href="route('form.new')">Buat Formulir</Link>
+                    </PrimaryButton>
                 </div>
             </div>
         </div>
