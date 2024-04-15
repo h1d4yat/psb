@@ -1,9 +1,16 @@
 import './bootstrap';
 import '../css/app.css';
+import 'primeicons/primeicons.css';
 
-import { createApp, h } from 'vue';
-import { createInertiaApp } from '@inertiajs/vue3';
+import {
+  createApp,
+  h,
+} from 'vue';
+
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+
+import { createInertiaApp } from '@inertiajs/vue3';
+
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
