@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
      */
     Route::prefix('form')->name('form.')->group(function () {
         Route::get('/new', [FormulirController::class, 'new'])->name('new');
+        Route::post('/new', [FormulirController::class, 'simpanBaru'])->name('simpan_baru');
     });
 });
 
