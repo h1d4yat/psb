@@ -77,34 +77,12 @@ class Form extends Model
             'kode_pos',
         ];
         $alamat = self::first()->toArray();
+
         return array_intersect_key($alamat, array_flip($fields));
     }
-    public function biodata(){
-        $data = self::first()->toArray();
-        $fields = [
-            'nisn',
-        'nik',
-        'nama',
-        'jenis_kelamin',
-        'tempat_lahir',
-        'tanggal_lahir',
-        'agama',
-        'golongan_darah',
-        'tempat_tinggal',
-        'alat_transportasi',
-        'no_telp',
-        'email',
-        'pas_foto',
-        'no_kip',
-        'no_kis',
-        'no_kks',
-        'no_sktm',
-        'hobi',
-        'cita_cita',
-        ];
-        return array_intersect_key($data, array_flip($fields));
-    }
-    public function user(){
+
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }

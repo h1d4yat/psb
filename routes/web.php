@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Forms\BiodataController;
 use App\Http\Controllers\FormulirController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -30,6 +31,9 @@ Route::middleware('auth')->group(function () {
     Route::prefix('form')->name('form.')->group(function () {
         Route::get('/new', [FormulirController::class, 'new'])->name('new');
         Route::post('/new', [FormulirController::class, 'simpanBaru'])->name('simpan_baru');
+        Route::namespace('App\Http\Controllers\Form')->group(function () {
+            Route::get('/biodata', [BiodataController::class, 'index'])->name('biodata');
+        });
     });
 });
 

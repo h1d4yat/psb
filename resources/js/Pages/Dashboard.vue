@@ -31,7 +31,7 @@ import {
                         <Link :href="route('form.new')">Buat Formulir</Link>
                     </PrimaryButton>
                     <PrimaryButton v-else>
-                        <Link :href="route('form.new')">Lanjut Mendaftar</Link>
+                        <Link :href="route('form.biodata')">Lanjut Mendaftar</Link>
                     </PrimaryButton>
                 </div>
             </div>
