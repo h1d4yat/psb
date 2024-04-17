@@ -11,6 +11,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import Select from '@/Components/Select.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import Toast from '@/Utils/Toast';
 import {
   useForm,
   usePage,
@@ -46,14 +47,17 @@ const user = useForm({
 })
 
 const loading = ref(false);
-
+const page = usePage();
 const simpan = computed(function(){
     user.post(route('form.simpan_baru'),{
         onStart:()=>{
             loading.value = true
         },
         onFinish:()=>{
-            loading.value = false
+            loading.value = false;
+            if(page.props.errors.suksess){
+                Toast.success("Formulir berhasil di buat! Lanjut isi biodata");
+            }
         }
     });
 });
@@ -96,7 +100,7 @@ const simpan = computed(function(){
                 </div>
             </form>
         </div>
-        <div class="p-8 bg-white rounded-lg shadow-lg">
+        <div v-else class="p-8 bg-white rounded-lg shadow-lg">
             <Detail/>
         </div>
     </AuthenticatedLayout>

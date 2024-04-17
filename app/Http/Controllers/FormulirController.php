@@ -7,6 +7,7 @@ use App\Models\JalurPendaftaran;
 use App\Models\Jurusan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class FormulirController extends Controller
@@ -20,7 +21,7 @@ class FormulirController extends Controller
 
     public function simpanBaru(Request $request)
     {
-        if($request->user()->form){
+        if ($request->user()->form) {
             return redirect()->back();
         }
         $validated = $request->validate([
@@ -36,6 +37,9 @@ class FormulirController extends Controller
         ]);
         $validated['user_id'] = Auth::id();
         Form::firstOrCreate($validated);
-        return $validated;
+
+        return Redirect::back()->withErrors([
+            'suksess' => true,
+        ]);
     }
 }

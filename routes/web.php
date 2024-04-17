@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/new', [FormulirController::class, 'simpanBaru'])->name('simpan_baru');
         Route::namespace('App\Http\Controllers\Form')->group(function () {
             Route::get('/biodata', [BiodataController::class, 'index'])->name('biodata');
+            Route::post('/biodata', [BiodataController::class, 'simpan'])->name('biodata.save');
         });
     });
 });

@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "flowbite": "^2.3.0",
+        "notyf": "^3.10.0",
         "primeicons": "^7.0.0"
     }
 }

@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Form;
 use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Support\Facades\Auth;
 
 class FormService
 {
@@ -13,6 +14,11 @@ class FormService
      */
     public function __construct()
     {
+    }
+
+    public function simpanBiodata(array $data)
+    {
+        Auth::user()->form()->update($data);
     }
 
     public function getBiodata(User|Authenticatable $user)
