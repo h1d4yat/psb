@@ -12,7 +12,7 @@ class JalurPendaftaranSeeder extends Seeder
      */
     public function run(): void
     {
-        JalurPendaftaran::create([
+        JalurPendaftaran::createOrFirst([
             'nama' => 'UMUM',
             'start' => now(),
             'end' => now()->addMonths(1),
@@ -20,7 +20,7 @@ class JalurPendaftaranSeeder extends Seeder
             'deskripsi' => fake()->text(200),
             'aktif' => true,
         ]);
-        JalurPendaftaran::create([
+        JalurPendaftaran::createOrFirst([
             'nama' => 'PRESTASI',
             'start' => now(),
             'end' => now()->addMonths(1),
@@ -28,7 +28,7 @@ class JalurPendaftaranSeeder extends Seeder
             'deskripsi' => fake()->text(200),
             'aktif' => true,
         ]);
-        JalurPendaftaran::create([
+        JalurPendaftaran::createOrFirst([
             'nama' => 'MANDIRI',
             'start' => now(),
             'end' => now()->addMonths(1),

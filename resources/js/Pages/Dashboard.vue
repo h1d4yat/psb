@@ -27,8 +27,11 @@ import {
                 </p>
                 <p v-else>Silahkan lanjut mengisi form pendaftaran.</p>
                 <div class="flex justify-start mt-4">
-                    <PrimaryButton>
+                    <PrimaryButton v-if="!$page.props.haveForm">
                         <Link :href="route('form.new')">Buat Formulir</Link>
+                    </PrimaryButton>
+                    <PrimaryButton v-else>
+                        <Link :href="route('form.new')">Lanjut Mendaftar</Link>
                     </PrimaryButton>
                 </div>
             </div>

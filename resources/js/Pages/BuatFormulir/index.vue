@@ -16,6 +16,8 @@ import {
   usePage,
 } from '@inertiajs/vue3';
 
+import Detail from './Partials/Detail.vue';
+
 const props = usePage();
 const slots = useSlots();
 
@@ -55,7 +57,6 @@ const simpan = computed(function(){
         }
     });
 });
-
 </script>
 <template>
     <AuthenticatedLayout>
@@ -63,7 +64,7 @@ const simpan = computed(function(){
         <template #header>
             Dashboard
         </template>
-        <div class="p-8 bg-white rounded-lg shadow-lg">
+        <div v-if="!$page.props.haveForm" class="p-8 bg-white rounded-lg shadow-lg">
             <form @submit.prevent="simpan" action="" class="flex flex-col items-end justify-end space-y-3">
                 <div class="grid w-full grid-cols-1 gap-4 sm:grid-cols-3">
                     <div class="">
@@ -94,6 +95,9 @@ const simpan = computed(function(){
                     <span class="block" v-if="loading">Loading</span>
                 </div>
             </form>
+        </div>
+        <div class="p-8 bg-white rounded-lg shadow-lg">
+            <Detail/>
         </div>
     </AuthenticatedLayout>
 </template>
