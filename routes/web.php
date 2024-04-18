@@ -3,6 +3,7 @@
 use App\Http\Controllers\Forms\BiodataController;
 use App\Http\Controllers\FormulirController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\FormulirMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -31,7 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('form')->name('form.')->group(function () {
         Route::get('/new', [FormulirController::class, 'new'])->name('new');
         Route::post('/new', [FormulirController::class, 'simpanBaru'])->name('simpan_baru');
-        Route::namespace('App\Http\Controllers\Form')->group(function () {
+        Route::namespace('App\Http\Controllers\Form')->middleware(FormulirMiddleware::class)->group(function () {
             Route::get('/biodata', [BiodataController::class, 'index'])->name('biodata');
             Route::post('/biodata', [BiodataController::class, 'simpan'])->name('biodata.save');
         });

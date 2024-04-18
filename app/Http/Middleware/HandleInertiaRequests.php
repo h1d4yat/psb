@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Services\FormService;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -34,7 +35,9 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
-            'haveForm' => !empty($request->user()->form)
+            'haveForm' => !empty($request->user()->form),
+            'form_is_lock' => $request->user()?->form?->is_lock,
+            'progress' =>  (new FormService)->getProgress()
         ];
     }
 }

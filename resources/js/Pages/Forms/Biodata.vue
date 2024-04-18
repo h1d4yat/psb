@@ -26,6 +26,28 @@ const jenis_kelamin = ref([
         value: "Perempuan",
     },
 ]);
+const tempat_tinggal = ref([
+    {
+        key: "Sama Orang Tua",
+        value: "Sama Orang Tua",
+    },
+    {
+        key: "Kos",
+        value: "Ngekos",
+    },
+    {
+        key: "Sama Nenek",
+        value: "Sama Nenek",
+    },
+    {
+        key: "Sama Kakak",
+        value: "Sama Kakak",
+    },
+    {
+        key: "Asrama",
+        value: "Asrama",
+    },
+]);
 const golongan_darah = ref([
     {
         key: "A",
@@ -65,15 +87,15 @@ const data = useForm({
     tanggal_lahir: page.props.data.tanggal_lahir,
     agama: page.props.data.agama,
     golongan_darah: page.props.data.golongan_darah,
-    tempat_tinggal: page.props.tempat_tinggal,
-    alat_transportasi: page.props.alat_transportasi,
+    tempat_tinggal: page.props.data.tempat_tinggal,
+    alat_transportasi: page.props.data.alat_transportasi,
     no_telp: page.props.data.no_telp,
     email: page.props.data.email,
     pas_foto: page.props.data.pas_foto,
-    no_kip: page.props.data.no_kip,
-    no_kis: page.props.data.no_kis,
-    no_kks: page.props.data.no_kks,
-    no_sktm: page.props.data.no_sktm,
+    no_kip: page.props.data.no_kip ?? '-',
+    no_kis: page.props.data.no_kis ?? '-',
+    no_kks: page.props.data.no_kks ?? '-',
+    no_sktm: page.props.data.no_sktm ?? '-',
     hobi: page.props.data.hobi,
     cita_cita: page.props.data.cita_cita,
 });
@@ -87,18 +109,24 @@ const simpan = computed(function () {
         },
         onFinish: () => {
             loading.value = false;
-            toast.success("Biodata sudah di simpan");
+            if(usePage().props.errors.success) {
+                toast.success(usePage().props.errors.success);
+            } else{
+                toast.error("Ada kesalahan saat menyimpan data");
+            }
         },
-        onError: (e) => {
-            toast.error(e);
-        },
+      
     });
 });
 </script>
 <template>
     <AuthenticatedLayout title="Isi Biodata">
         <template #header>ISI BIODATA</template>
-        <div class="bg-white p-8 rounded shadow-lg">
+       
+        <div class="p-8 bg-white rounded shadow-lg">
+            <div class="mb-5">
+            <span>Kelengkapan {{ $page.props.progress.biodata }} %</span>
+        </div>
             <form
                 @submit.prevent="simpan"
                 method="post"
@@ -127,6 +155,16 @@ const simpan = computed(function () {
                         <InputError :message="$page.props.errors.nik" />
                     </div>
                 </div>
+                    <div class="w-full">
+                        <InputLabel>Alat Transportasi Kesekolah</InputLabel>
+                        <TextInput
+                            :error="($page.props.errors.alat_transportasi != null)"
+                            v-model="data.alat_transportasi"
+                            placeholder="Alat transportasi Contoh:Mobil"
+                            type="text"
+                        />
+                        <InputError :message="$page.props.errors.alat_transportasi" />
+                </div>
                 <div class="">
                     <InputLabel>Nama</InputLabel>
                     <TextInput
@@ -137,6 +175,14 @@ const simpan = computed(function () {
                     />
                     <InputError :message="$page.props.errors.nama" />
                 </div>
+                <div class="">
+                        <InputLabel>Tempat Tinggal</InputLabel>
+                        <Select
+                            v-model="data.tempat_tinggal"
+                            label="Tempat Tinggal"
+                            :items="tempat_tinggal"
+                        />
+                    </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div class="">
                         <InputLabel>Jenis Kelamin</InputLabel>
