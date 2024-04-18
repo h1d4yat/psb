@@ -68,7 +68,7 @@ const simpan = computed(function(){
         <template #header>
             Dashboard
         </template>
-        <div v-if="!$page.props.haveForm" class="p-8 bg-white rounded-lg shadow-lg">
+        <div v-if="!$page.props.haveForm" class="p-8 transition-all bg-white rounded-lg shadow-lg">
             <form @submit.prevent="simpan" action="" class="flex flex-col items-end justify-end space-y-3">
                 <div class="grid w-full grid-cols-1 gap-4 sm:grid-cols-3">
                     <div class="">

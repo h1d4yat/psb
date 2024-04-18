@@ -13,6 +13,10 @@ const props = defineProps({
     },
     active: {
         type: Boolean
+    },
+    badge :{
+        type:String,
+        required:false,
     }
 });
 
@@ -27,8 +31,11 @@ const classes = computed(function () {
         <slot
             class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
             name="icon" />
-        <span class="ms-3">
+           <span class="flex justify-between w-full ms-3">
             <slot />
+            <span v-show="badge != null" class="flex items-center justify-center h-6 text-xs text-white text-gray-900 bg-red-500 rounded-full aspect-square">
+                {{ badge }}
+            </span>
         </span>
         </Link>
     </li>

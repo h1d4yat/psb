@@ -18,6 +18,7 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
+        "@uploadcare/blocks": "0.35.2",
         "flowbite": "^2.3.0",
         "notyf": "^3.10.0",
         "primeicons": "^7.0.0"

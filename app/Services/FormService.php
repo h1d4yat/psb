@@ -11,12 +11,6 @@ use Illuminate\Support\Facades\Log;
 
 class FormService
 {
-    /**
-     * Create a new class instance.
-     */
-    public function __construct()
-    {
-    }
 
     public function simpanBiodata(array $data)
     {
@@ -28,11 +22,18 @@ class FormService
         }
     }
 
+    public function getForm(User|Authenticatable $user){
+       return Form::where('user_id', $user->id)->first()->toArray();
+    }
     public function getBiodata(User|Authenticatable $user)
     {
-        $biodata = Form::where('user_id', $user->id)->first()->toArray();
-
+        $biodata = $this->getForm($user);
         return array_intersect_key($biodata, array_flip($this->getFieldObjects('biodata')));
+    }
+    public function getAlamat(User|Authenticatable $user){
+        $data = $this->getForm($user);
+        return array_intersect_key($data, array_flip($this->getFieldObjects('alamat')));
+
     }
 
     public function getFieldObjects(string $key = null): array
@@ -51,6 +52,8 @@ class FormService
 
     public function getProgress()
     {
+      
+       try {
         $form = auth()->user()->form;
         $percent = array_combine(array_keys($this->getFieldObjects()), array_fill(1, count($this->getFieldObjects()), 0));
         $fields = $this->getFieldObjects();
@@ -61,8 +64,13 @@ class FormService
                     ++$percent[$key];
                 }
             }
-            $percent[$key] = round(($percent[$key] / (count($field) -1)) * 100);
+            $percent[$key] =round( $percent[$key] / count($field) * 100);
         }
+        
         return $percent;
+       } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            return;
+       }
     }
 }

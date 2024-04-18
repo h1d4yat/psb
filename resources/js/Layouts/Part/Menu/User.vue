@@ -10,13 +10,17 @@ import { Link } from '@inertiajs/vue3';
             <template #icon><i class="pi pi-home"></i></template>
             Dashboard
         </MenuLink>
-        <MenuLink href="pendaftaran">
+        <MenuLink :href="route('form.new')" :active="route().current('form.new')">
             <template #icon><i class="pi pi-file"></i></template>
             Pendaftaran
         </MenuLink>
-        <MenuLink href="asu">
+        <MenuLink href="asu" badge="2">
             <template #icon><i class="pi pi-bell"></i></template>
             Pengumuman
+        </MenuLink>
+        <MenuLink href="asu" badge="9+">
+            <template #icon><i class="pi pi-send"></i></template>
+            Pesan
         </MenuLink>
         <MenuHeader>Seleksi</MenuHeader>
       </ul>

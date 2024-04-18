@@ -27,7 +27,10 @@ const openMenuUser = ref(false);
                             class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Flowbite</span>
                     </a>
                 </div>
-                <div class="flex items-center">
+                <div class="flex items-center gap-5">
+                    <a href="">
+                        <i class="text-lg pi pi-bell"></i>
+                    </a>
                     <div class="flex items-center ms-3">
                         <div>
                             <button type="button"
@@ -35,7 +38,7 @@ const openMenuUser = ref(false);
                                 @click="openMenuUser = !openMenuUser">
                                 <span class="sr-only">Open user menu</span>
                                 <img class="w-8 h-8 rounded-full"
-                                    src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                                    src="{{ $page.props.auth.user.form.pas_foto ?? '' }}"
                                     alt="user photo" />
                             </button>
                         </div>

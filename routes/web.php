@@ -1,9 +1,4 @@
 <?php
-
-use App\Http\Controllers\Forms\BiodataController;
-use App\Http\Controllers\FormulirController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Middleware\FormulirMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -21,20 +16,21 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
+Route::middleware(['auth','verified'])->group(function () {
+    Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [App\Http\Controllers\ProfileController::class, 'destroy'])->name('profile.destroy');
     /*
      * Buat Pendaftaran
      */
     Route::prefix('form')->name('form.')->group(function () {
-        Route::get('/new', [FormulirController::class, 'new'])->name('new');
-        Route::post('/new', [FormulirController::class, 'simpanBaru'])->name('simpan_baru');
-        Route::namespace('App\Http\Controllers\Form')->middleware(FormulirMiddleware::class)->group(function () {
-            Route::get('/biodata', [BiodataController::class, 'index'])->name('biodata');
-            Route::post('/biodata', [BiodataController::class, 'simpan'])->name('biodata.save');
+        Route::get('/new', [App\Http\Controllers\FormulirController::class, 'new'])->name('new');
+        Route::post('/new', [App\Http\Controllers\FormulirController::class, 'simpanBaru'])->name('simpan_baru');
+        Route::namespace('App\Http\Controllers\Form')->middleware(App\Http\Middleware\FormulirMiddleware::class)->group(function () {
+            Route::get('/biodata', [App\Http\Controllers\Forms\BiodataController::class, 'index'])->name('biodata');
+            Route::post('/biodata', [App\Http\Controllers\Forms\BiodataController::class, 'simpan'])->name('biodata.save');
+            //alamat
+            Route::get('/alamat',[App\Http\Controllers\Forms\AlamatController::class,'index'])->name('alamat');
         });
     });
 });

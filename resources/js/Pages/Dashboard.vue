@@ -31,7 +31,8 @@ import {
                         <Link :href="route('form.new')">Buat Formulir</Link>
                     </PrimaryButton>
                     <PrimaryButton v-else>
-                        <Link :href="route('form.biodata')">Lanjut Mendaftar</Link>
+                        <Link v-if="$page.props.progress.biodata <= 80" :href="route('form.biodata')">Lanjut Mendaftar</Link>
+                        <Link v-else :href="route('form.alamat')">Lanjut Mendaftar</Link>
                     </PrimaryButton>
                 </div>
             </div>
