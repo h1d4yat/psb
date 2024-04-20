@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -16,7 +17,7 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware(['auth','verified'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [App\Http\Controllers\ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -29,8 +30,9 @@ Route::middleware(['auth','verified'])->group(function () {
         Route::namespace('App\Http\Controllers\Form')->middleware(App\Http\Middleware\FormulirMiddleware::class)->group(function () {
             Route::get('/biodata', [App\Http\Controllers\Forms\BiodataController::class, 'index'])->name('biodata');
             Route::post('/biodata', [App\Http\Controllers\Forms\BiodataController::class, 'simpan'])->name('biodata.save');
-            //alamat
-            Route::get('/alamat',[App\Http\Controllers\Forms\AlamatController::class,'index'])->name('alamat');
+            // alamat
+            Route::get('/alamat', [App\Http\Controllers\Forms\AlamatController::class, 'index'])->name('alamat');
+            Route::post('/alamat', [App\Http\Controllers\Forms\AlamatController::class, 'simpan'])->name('alamat.simpan');
         });
     });
 });

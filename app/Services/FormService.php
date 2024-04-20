@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Log;
 
 class FormService
 {
-
     public function simpanBiodata(array $data)
     {
         try {
@@ -22,18 +21,23 @@ class FormService
         }
     }
 
-    public function getForm(User|Authenticatable $user){
-       return Form::where('user_id', $user->id)->first()->toArray();
+    public function getForm(User|Authenticatable $user)
+    {
+        return Form::where('user_id', $user->id)->first()->toArray();
     }
+
     public function getBiodata(User|Authenticatable $user)
     {
         $biodata = $this->getForm($user);
+
         return array_intersect_key($biodata, array_flip($this->getFieldObjects('biodata')));
     }
-    public function getAlamat(User|Authenticatable $user){
-        $data = $this->getForm($user);
-        return array_intersect_key($data, array_flip($this->getFieldObjects('alamat')));
 
+    public function getAlamat(User|Authenticatable $user)
+    {
+        $data = $this->getForm($user);
+
+        return array_intersect_key($data, array_flip($this->getFieldObjects('alamat')));
     }
 
     public function getFieldObjects(string $key = null): array
@@ -52,25 +56,34 @@ class FormService
 
     public function getProgress()
     {
-      
-       try {
-        $form = auth()->user()->form;
-        $percent = array_combine(array_keys($this->getFieldObjects()), array_fill(1, count($this->getFieldObjects()), 0));
-        $fields = $this->getFieldObjects();
+        try {
+            $form = auth()->user()->form;
+            $percent = array_combine(array_keys($this->getFieldObjects()), array_fill(1, count($this->getFieldObjects()), 0));
+            $fields = $this->getFieldObjects();
 
-        foreach ($fields as $key => $field) {
-            foreach ($field as $f) {
-                if (null != $form[$f] && $key != 'pas_foto') {
-                    ++$percent[$key];
+            foreach ($fields as $key => $field) {
+                foreach ($field as $f) {
+                    if (null != $form[$f] && $key != 'pas_foto') {
+                        ++$percent[$key];
+                    }
                 }
+                $percent[$key] = round($percent[$key] / count($field) * 100);
             }
-            $percent[$key] =round( $percent[$key] / count($field) * 100);
-        }
-        
-        return $percent;
-       } catch (\Throwable $th) {
+
+            return $percent;
+        } catch (\Throwable $th) {
             Log::error($th->getMessage());
+
             return;
-       }
+        }
+    }
+
+    public function simpanAlamat(array|object $data)
+    {
+        try {
+            Auth::user()->form()->update($data);
+        } catch (\Throwable $th) {
+            throw new FormException($th->getMessage());
+        }
     }
 }
