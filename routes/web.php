@@ -33,6 +33,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
             // alamat
             Route::get('/alamat', [App\Http\Controllers\Forms\AlamatController::class, 'index'])->name('alamat');
             Route::post('/alamat', [App\Http\Controllers\Forms\AlamatController::class, 'simpan'])->name('alamat.simpan');
+            //priodik
+            Route::get('/alamat', [App\Http\Controllers\Forms\AlamatController::class, 'index'])->name('alamat');
+            Route::post('/alamat', [App\Http\Controllers\Forms\AlamatController::class, 'simpan'])->name('alamat.simpan');
         });
     });
 });
